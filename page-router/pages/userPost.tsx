@@ -1,18 +1,28 @@
-import { USER_API } from "../constants/api"
-import { User } from "../types/user";
+import {fetchAllUsers} from "../apis/controller";
+import {GetServerSideProps} from "next";
 import Card from "../components/card";
 import Link from "next/link";
+import { User } from "@/types/user";
 
-export async function getServerSideProps() {
-  const res = await fetch(USER_API);
-  const data: User[] = await res.json();
 
-  return {
-    props: {
-      users: data,
-    },
-  };
-}
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const users = await fetchAllUsers();
+
+    return {
+      props: {
+        users,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return {
+      props: {
+        users: [],
+      },
+    };
+  }
+};
 
 const UserPosts = ({ users }: { users: User[] }) => {
   return (
@@ -24,6 +34,7 @@ const UserPosts = ({ users }: { users: User[] }) => {
               <Card
                 name={user.Name}
                 Images={user.Images}
+                Description={user.Description}
               />
           </Link>
         ))}
