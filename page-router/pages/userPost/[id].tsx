@@ -7,7 +7,6 @@ import {fetchAllUsers, fetchUserById} from "../../apis/controller"
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const users = await fetchAllUsers();
-
   const paths = users.map((user) => ({
     params: { id: user.id.toString() },
   }));
@@ -25,7 +24,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: { user: null },
     };
   }
-
   const user = await fetchUserById(id);
   return {
     props: {
@@ -37,11 +35,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export default function UserDetail({ user }: { user: User }) {
   const router = useRouter();
-
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-
   if (!user) {
     return (
       <div className="p-4 text-center text-red-600 font-semibold">
