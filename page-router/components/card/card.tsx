@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { CardProps } from "../types/user";
+import { CardProps } from "../../types/user";
 
-const Card = ({ name, Images, Description }: CardProps) => {
+export const Card = ({ name, Images, Description }: CardProps) => {
   return (
     <div className="p-6 border-2 border-indigo-100 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center bg-white relative overflow-hidden">
       <div className="mb-4 p-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-500">
@@ -18,5 +18,3 @@ const Card = ({ name, Images, Description }: CardProps) => {
     </div>
   );
 };
-
-export default Card;

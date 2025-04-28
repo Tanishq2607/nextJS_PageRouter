@@ -1,8 +1,9 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { User } from "../../types/user";
-import Card from "../../components/card";
+import { Card } from "@/components";
 import {fetchAllUsers, fetchUserById} from "../../apis/controller"
+import { USER_DETAIL } from "../../constants/message";
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -36,19 +37,19 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export default function UserDetail({ user }: { user: User }) {
   const router = useRouter();
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return <div>{USER_DETAIL.loadingMessage}</div>;
   }
   if (!user) {
     return (
       <div className="p-4 text-center text-red-600 font-semibold">
-        User not found
+        {USER_DETAIL.notFoundMessage}
       </div>
     );
   }
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">User Detail</h1>
+      <h1 className="text-xl font-bold mb-4">{USER_DETAIL.title}</h1>
       <Card name={user.Name} Images={user.Images} Description={user.Description} />
       <div className="mt-4">
       </div>
